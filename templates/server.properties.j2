@@ -1,0 +1,27 @@
+# The ID of *this* particular cluster node
+node.id=0
+
+max.threads=750
+core.threads=250
+
+############### DB options ######################
+
+je.maxMemoryPercent=20%
+
+http.enable=true
+socket.enable=true
+jmx.enable=flase
+
+# BDB
+bdb.sync.transactions=false
+bdb.cache.size=2G
+
+# Mysql
+mysql.host={{ voldemort_mysql_host }}
+mysql.port={{ voldemort_mysql_port }}
+mysql.user={{ voldemort_mysql_user }}
+mysql.password={{ voldemort_mysql_password }}
+mysql.database={{ voldemort_mysql_database }}
+
+#ReadOnly
+enable.readonly.engine=true

@@ -1,0 +1,35 @@
+---
+
+  - name: Voldemort | Ensure voldemort group
+    group:
+      name: "{{ voldemort_group }}"
+
+  - name: Voldemort | Ensure voldemort user
+    user:
+      name: "{{ voldemort_user }}"
+      group: "{{ voldemort_group }}"
+      shell: /bin/bash
+
+  - name: Voldemort | Create install path
+    file:
+      path: "{{ voldemort_install_path }}"
+      state: directory
+      owner: "{{ voldemort_user }}"
+      group: "{{ voldemort_group }}"
+
+  - name: "Voldemort | Download & Extract Voldemort"
+    unarchive:
+      extra_opts: ['--strip-components=1']
+      src: "{{ voldemort_url }}"
+      remote_src: true
+      dest: "{{ voldemort_install_path }}"
+      owner: "{{ voldemort_user }}"
+      group: "{{ voldemort_group }}"
+      mode: 0750
+
+  - name: Voldemort | Copy Daemon script
+    template:
+      src: voldemort.service.j2
+      dest: /lib/systemd/system/voldemort.service
+      mode: 0644
+    notify: restart voldemort     

@@ -1,0 +1,11 @@
+<cluster>
+        <name>{{ installation_name }}</name>
+        <server>
+                <id>0</id>
+                <host>{{ voldemort_cluster_ip }}</host>
+                <http-port>{{ voldemort_cluster_http_port }}</http-port>
+                <socket-port>{{ voldemort_cluster_socket_port }}</socket-port>
+                <admin-port>{{ voldemort_cluster_admin_port }}</admin-port>
+                <partitions>0, 1, 2, 3</partitions>
+        </server>
+</cluster>

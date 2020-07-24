@@ -4,13 +4,13 @@
       import_tasks: install.yml
       tags:
         - install
-    
-    - name: Voldemort | Service
-        import_tasks: service.yml
-        tags:
-        - service
 
     - name: Voldemort | Config
-        import_tasks: config.yml
-        tags:
+      import_tasks: config.yml
+      tags:
         - config
+    
+    - name: Voldemort | Service
+      import_tasks: service.yml
+      tags:
+        - service

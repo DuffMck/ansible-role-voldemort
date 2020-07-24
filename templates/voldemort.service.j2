@@ -3,11 +3,9 @@ Description=Voldemort server
 After=network.target
 
 [Service]
-Type=forking
-
 WorkingDirectory={{ voldemort_install_path }}
 
-ExecStart={{ voldemort_bin_path }}/start.sh 
+ExecStart={{ voldemort_install_path }}/start.sh 
 ExecStop={{ voldemort_bin_path }}/voldemort-stop.sh
 
 User={{ voldemort_user }}

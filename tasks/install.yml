@@ -30,13 +30,13 @@
       dest: "{{ voldemort_install_path }}"
       owner: "{{ voldemort_user }}"
       group: "{{ voldemort_group }}"
-      mode: 0644
+      mode: ug+rw
 
   - name: "Voldemort | Find all .sh files"
     find:
       paths: "{{ voldemort_install_path }}"
-      patterns: '*.sh'
-      recoursive: true
+      patterns: '*.gradle'
+      recurse: true
     register: file_search
 
   - name: "Voldemort | Add execution permission to .sh files" 
@@ -45,17 +45,20 @@
       owner: "{{ voldemort_user }}"
       group: "{{ voldemort_group }}"
       mode: 0740
-    with_items:
+    with_items: "{{ file_search.files }}"
 
   - name: "Voldemort | Build source classes"
-    command: "sh {{ voldemort_install_path }}/gradlew clean build -x test"
-      become: yes
-      become_user: "{{ voldemort_user }}"
+    command: "./gradlew clean build -x test"
+    args:
+      chdir: "{{ voldemort_install_path }}"
+    become_user: "{{ voldemort_user }}"
 
   - name: Voldemort | Create run script
     template:
       src: start.sh.j2
       dest: "{{ voldemort_install_path }}/start.sh"
+      owner: "{{ voldemort_user }}"
+      group: "{{ voldemort_group }}"
       mode: 0740
     notify: restart voldemort     
 

@@ -1,10 +1,13 @@
 ---
 
 - name: Voldemort | Copy example folder
-    copy:
-    src: "{{ voldemort_confs_path }}/single_node_cluster"
+  copy:
+    src: "{{ voldemort_confs_path }}/single_node_cluster/config"
     dest: "{{ voldemort_confs_path }}/{{ installation_name }}"
+    owner: "{{ voldemort_user }}"
+    group: "{{ voldemort_group }}"
     remote_src: yes
+    directory_mode: yes
     validate: /usr/sbin/visudo -csf %s
 
 - name: Voldemort | Copy properties templates
@@ -16,5 +19,5 @@
     group: "{{ voldemort_group }}"
   with_items:
     - { src: "cluster.xml.j2", dest: "{{ voldemort_confs_path }}/{{ installation_name }}/config/cluster.xml" }
-    - { src: "server.properties.j2", dest: "{{ tomcat_conf_path }}/config/server.properties" }
+    - { src: "server.properties.j2", dest: "{{ voldemort_confs_path }}/{{ installation_name }}/config/server.properties" }
   notify: restart voldemort

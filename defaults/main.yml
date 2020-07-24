@@ -7,7 +7,7 @@ voldemort_bin_path: "{{ voldemort_install_path }}/bin"
 voldemort_confs_path: "{{ voldemort_install_path }}/config"
 
 voldemort_version: 1.10.25
-voldemort_url: "https://github.com/voldemort/voldemort/archive/release-{{ voldemort_version }}-cutoff.tar.gz"
+voldemort_url: "https://github.com/voldemort/voldemort/archive/release-{{ voldemort_version }}.tar.gz"
 
 voldemort_service_state: started
 voldemort_service_enabled: true

@@ -7,7 +7,7 @@ Type=forking
 
 WorkingDirectory={{ voldemort_install_path }}
 
-ExecStart={{ voldemort_bin_path }}/voldemort-server.sh "{{ voldemort_confs_path }}/{{ installation_name }}"
+ExecStart={{ voldemort_bin_path }}/start.sh 
 ExecStop={{ voldemort_bin_path }}/voldemort-stop.sh
 
 User={{ voldemort_user }}

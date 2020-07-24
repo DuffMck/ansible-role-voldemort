@@ -10,6 +10,11 @@
       group: "{{ voldemort_group }}"
       shell: /bin/bash
 
+  - name: Voldemort | Remove install path if exist
+    file:
+      path: "{{ voldemort_install_path }}"
+      state: absent
+
   - name: Voldemort | Create install path
     file:
       path: "{{ voldemort_install_path }}"
@@ -25,7 +30,34 @@
       dest: "{{ voldemort_install_path }}"
       owner: "{{ voldemort_user }}"
       group: "{{ voldemort_group }}"
-      mode: 0750
+      mode: 0644
+
+  - name: "Voldemort | Find all .sh files"
+    find:
+      paths: "{{ voldemort_install_path }}"
+      patterns: '*.sh'
+      recoursive: true
+    register: file_search
+
+  - name: "Voldemort | Add execution permission to .sh files" 
+    file:
+      path: "{{ item.path }}"
+      owner: "{{ voldemort_user }}"
+      group: "{{ voldemort_group }}"
+      mode: 0740
+    with_items:
+
+  - name: "Voldemort | Build source classes"
+    command: "sh {{ voldemort_install_path }}/gradlew clean build -x test"
+      become: yes
+      become_user: "{{ voldemort_user }}"
+
+  - name: Voldemort | Create run script
+    template:
+      src: start.sh.j2
+      dest: "{{ voldemort_install_path }}/start.sh"
+      mode: 0740
+    notify: restart voldemort     
 
   - name: Voldemort | Copy Daemon script
     template:

@@ -1,0 +1,24 @@
+---
+voldemort_group: voldemort
+voldemort_user: voldemort
+
+voldemort_install_path: /opt/voldemort
+voldemort_bin_path: "{{ voldemort_install_path }}/bin"
+voldemort_confs_path: "{{ voldemort_install_path }}/config"
+
+voldemort_version: 1.10.25
+voldemort_url: "https://github.com/voldemort/voldemort/archive/release-{{ voldemort_version }}-cutoff.tar.gz"
+
+voldemort_service_state: started
+voldemort_service_enabled: true
+
+voldemort_cluster_ip: 0.0.0.0
+voldemort_cluster_http_port: 8081
+voldemort_cluster_socket_port: 6669
+voldemort_cluster_admin_port: 6668
+
+voldemort_mysql_host: localhost
+voldemort_mysql_port: 1521
+voldemort_mysql_user: root
+voldemort_mysql_password: 3306
+voldemort_mysql_database: test

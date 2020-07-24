@@ -1,0 +1,22 @@
+---
+
+- name: Voldemort | Copy example folder
+    copy:
+    src: "{{ voldemort_confs_path }}/single_node_cluster"
+    dest: "{{ voldemort_confs_path }}/{{ installation_name }}"
+    remote_src: yes
+    validate: /usr/sbin/visudo -csf %s
+
+- name: Voldemort | Copy properties templates
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0640
+    owner: "{{ voldemort_user }}"
+    group: "{{ voldemort_group }}"
+  with_items:
+    - { src: "cluster.xml.j2", dest: "{{ voldemort_confs_path }}/{{ installation_name }}/config/cluster.xml" }
+    - { src: "server.xml.j2", dest: "{{ tomcat_conf_path }}/server.xml" }
+    - { src: "setenv.sh.j2", dest: "{{ tomcat_bin_path }}/setenv.sh" }
+    - { src: "logging.properties.j2", dest: "{{ tomcat_conf_path }}/logging.properties" }
+  notify: restart tomcat

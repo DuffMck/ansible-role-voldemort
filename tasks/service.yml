@@ -1,0 +1,9 @@
+---
+
+    - name: Voldemort | Configuring service
+      systemd:
+        name: voldemort
+        state: "{{ voldemort_service_state }}"
+        enabled: "{{ voldemort_service_enabled }}"
+        daemon_reload: true
+    

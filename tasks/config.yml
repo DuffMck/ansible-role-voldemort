@@ -16,7 +16,5 @@
     group: "{{ voldemort_group }}"
   with_items:
     - { src: "cluster.xml.j2", dest: "{{ voldemort_confs_path }}/{{ installation_name }}/config/cluster.xml" }
-    - { src: "server.xml.j2", dest: "{{ tomcat_conf_path }}/server.xml" }
-    - { src: "setenv.sh.j2", dest: "{{ tomcat_bin_path }}/setenv.sh" }
-    - { src: "logging.properties.j2", dest: "{{ tomcat_conf_path }}/logging.properties" }
-  notify: restart tomcat
+    - { src: "server.properties.j2", dest: "{{ tomcat_conf_path }}/config/server.properties" }
+  notify: restart voldemort
